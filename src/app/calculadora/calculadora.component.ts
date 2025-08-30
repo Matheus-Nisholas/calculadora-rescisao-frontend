@@ -10,7 +10,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
-// ALTERADO: Faltava importar o MatCardModule.
 import { MatCardModule } from '@angular/material/card'; 
 
 @Component({
@@ -25,14 +24,14 @@ import { MatCardModule } from '@angular/material/card';
     MatButtonModule,
     MatCheckboxModule,
     MatDatepickerModule,
-    MatCardModule // Adicionado aqui
+    MatCardModule
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './calculadora.component.html',
   styleUrls: ['./calculadora.css']
 })
 export class CalculadoraComponent implements OnInit {
-  // O restante da classe permanece o mesmo...
+
   public calculoRequest = {
     tipoRescisao: 'SEM_JUSTA_CAUSA',
     salarioMensal: null,
@@ -41,13 +40,15 @@ export class CalculadoraComponent implements OnInit {
     avisoIndenizado: false,
     feriasVencidasDias: 0,
     saldoFgtsDepositado: null,
-    numeroDependentes: 0
+    numeroDependentes: 0,
+    // NOVO: Adicionado campo para o nome do empregado
+    nomeEmpregado: '' 
   };
 
   public resultado: any | null = null;
-  public historico: any[] = []; 
 
   constructor(private calculadoraService: CalculadoraService) { }
+
   ngOnInit(): void { }
 
   public calcular(): void {

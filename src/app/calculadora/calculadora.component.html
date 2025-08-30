@@ -9,6 +9,11 @@
       <form (ngSubmit)="calcular()" class="calculadora-form">
         
         <mat-form-field appearance="outline">
+          <mat-label>Nome do Empregado (Opcional)</mat-label>
+          <input matInput type="text" [(ngModel)]="calculoRequest.nomeEmpregado" name="nomeEmpregado">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
           <mat-label>Tipo de Rescisão</mat-label>
           <mat-select [(ngModel)]="calculoRequest.tipoRescisao" name="tipoRescisao">
             <mat-option value="SEM_JUSTA_CAUSA">Sem Justa Causa</mat-option>

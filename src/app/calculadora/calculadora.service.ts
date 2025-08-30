@@ -7,18 +7,15 @@ import { Observable, map } from 'rxjs';
 })
 export class CalculadoraService {
 
-  // ALTERADO: Mudamos o caminho relativo para o caminho absoluto da nossa API.
   private apiUrl = 'http://localhost:8080/api/v1/rescisoes';
 
   constructor(private http: HttpClient) { }
 
   public calcular(data: any): Observable<any> {
-    // Agora a URL final será http://localhost:8080/api/v1/rescisoes/calcular
     return this.http.post<any>(`${this.apiUrl}/calcular`, data);
   }
 
   public getHistorico(page: number = 0, size: number = 10): Observable<any> {
-    // Agora a URL final será http://localhost:8080/api/v1/rescisoes/historico
     return this.http.get<any>(`${this.apiUrl}/historico`, {
       params: {
         page: page.toString(),
@@ -28,7 +25,6 @@ export class CalculadoraService {
   }
 
   public getHistoricoPorId(id: number): Observable<any> {
-    // Agora a URL final será http://localhost:8080/api/v1/rescisoes/{id}
     return this.http.get<any>(`${this.apiUrl}/${id}`).pipe(
       map(calculo => {
         if (calculo && calculo.componentesJson) {
@@ -37,5 +33,14 @@ export class CalculadoraService {
         return calculo;
       })
     );
+  }
+
+  /**
+   * NOVO: Adicione este método.
+   * Envia uma requisição para excluir um cálculo do histórico.
+   * @param id O ID do cálculo a ser excluído.
+   */
+  public excluirCalculo(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
