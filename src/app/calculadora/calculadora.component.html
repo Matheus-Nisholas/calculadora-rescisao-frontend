@@ -32,12 +32,13 @@
       <input type="number" id="feriasVencidasDias" [(ngModel)]="calculoRequest.feriasVencidasDias" name="feriasVencidasDias">
     </div>
     <div class="form-group">
-      <label for="mesesTrabalhados">Meses no Ano Atual:</label>
-      <input type="number" id="mesesTrabalhados" [(ngModel)]="calculoRequest.mesesTrabalhadosNoAnoAtual" name="mesesTrabalhadosNoAnoAtual">
+      <label for="saldoFgtsDepositado">Saldo FGTS:</label>
+      <input type="number" id="saldoFgtsDepositado" [(ngModel)]="calculoRequest.saldoFgtsDepositado" name="saldoFgtsDepositado">
     </div>
+
     <div class="form-group">
-      <label for="fgts">Saldo FGTS:</label>
-      <input type="number" id="fgts" [(ngModel)]="calculoRequest.saldoFgtsDepositado" name="saldoFgtsDepositado">
+      <label for="numeroDependentes">Número de Dependentes (para IRRF):</label>
+      <input type="number" id="numeroDependentes" [(ngModel)]="calculoRequest.numeroDependentes" name="numeroDependentes" min="0">
     </div>
 
     <button type="submit">Calcular</button>
@@ -45,16 +46,28 @@
 
   <div *ngIf="resultado" class="resultado-container">
     <h3>Resultado do Cálculo</h3>
-    <p>Total Bruto: {{ resultado.totalBruto | currency:'BRL' }}</p>
-    <p>Total Descontos: {{ resultado.totalDescontos | currency:'BRL' }}</p>
-    <p>Total Líquido: {{ resultado.totalLiquido | currency:'BRL' }}</p>
-    <p>Pagamento até: {{ resultado.pagamentoAte }}</p>
-    <h4>Componentes:</h4>
+    
+    <h4>Proventos (Verbas Brutas)</h4>
     <ul>
       <li *ngFor="let comp of resultado.componentes">
         {{ comp.nome }}: {{ comp.valor | currency:'BRL' }}
       </li>
     </ul>
+    <p class="total-bruto">Total Bruto: {{ resultado.totalBruto | currency:'BRL' }}</p>
+
+    <div *ngIf="resultado.descontos && resultado.descontos.length > 0">
+      <h4>Descontos</h4>
+      <ul>
+        <li *ngFor="let desc of resultado.descontos">
+          {{ desc.nome }}: {{ desc.valor | currency:'BRL' }}
+        </li>
+      </ul>
+      <p class="total-descontos">Total Descontos: {{ resultado.totalDescontos | currency:'BRL' }}</p>
+    </div>
+    
+    <p class="total-liquido">Total Líquido a Receber: {{ resultado.totalLiquido | currency:'BRL' }}</p>
+    <p>Pagamento até: {{ resultado.pagamentoAte | date:'dd/MM/yyyy' }}</p>
+
   </div>
 
   <div *ngIf="historico.length > 0" class="historico-container">
@@ -74,8 +87,8 @@
         <tr *ngFor="let item of historico">
           <td>{{ item.criadoEm | date:'short' }}</td>
           <td>{{ item.salarioMensal | currency:'BRL' }}</td>
-          <td>{{ item.dataAdmissao }}</td>
-          <td>{{ item.dataDesligamento }}</td>
+          <td>{{ item.dataAdmissao | date:'dd/MM/yyyy' }}</td>
+          <td>{{ item.dataDesligamento | date:'dd/MM/yyyy' }}</td>
           <td>{{ item.totalBruto | currency:'BRL' }}</td>
           <td>{{ item.totalLiquido | currency:'BRL' }}</td>
         </tr>
