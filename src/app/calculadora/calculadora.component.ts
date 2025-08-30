@@ -1,9 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { CalculadoraService } from './calculadora.service';
-import { DatePipe } from '@angular/common';
+
+// ALTERADO: Adicionamos CommonModule e FormsModule para que o componente
+// possa usar diretivas como *ngIf, *ngFor e [(ngModel)] sem depender de um módulo.
+import { CommonModule } from '@angular/common'; 
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-calculadora',
+  // ALTERADO: Adicionamos a propriedade 'standalone: true'.
+  standalone: true,
+  // ALTERADO: Adicionamos o array 'imports'.
+  imports: [CommonModule, FormsModule], 
   templateUrl: './calculadora.component.html',
   styleUrls: ['./calculadora.css']
 })
@@ -16,8 +24,8 @@ export class CalculadoraComponent implements OnInit {
     dataDesligamento: null,
     avisoIndenizado: false,
     feriasVencidasDias: 0,
-    mesesTrabalhadosNoAnoAtual: 0,
-    saldoFgtsDepositado: null
+    saldoFgtsDepositado: null,
+    numeroDependentes: 0
   };
 
   public resultado: any | null = null;
@@ -29,18 +37,8 @@ export class CalculadoraComponent implements OnInit {
     this.carregarHistorico();
   }
 
-  /**
-   * Realiza o cálculo de rescisão ao submeter o formulário.
-   */
   public calcular(): void {
-    // Formata as datas para o padrão yyyy-MM-dd que a API espera
-    const formattedRequest = {
-      ...this.calculoRequest,
-      dataAdmissao: this.calculoRequest.dataAdmissao,
-      dataDesligamento: this.calculoRequest.dataDesligamento
-    };
-
-    this.calculadoraService.calcular(formattedRequest).subscribe({
+    this.calculadoraService.calcular(this.calculoRequest).subscribe({
       next: (response) => {
         this.resultado = response;
         this.carregarHistorico();
@@ -51,9 +49,6 @@ export class CalculadoraComponent implements OnInit {
     });
   }
 
-  /**
-   * Busca e exibe o histórico de cálculos.
-   */
   public carregarHistorico(): void {
     this.calculadoraService.getHistorico().subscribe({
       next: (response) => {
