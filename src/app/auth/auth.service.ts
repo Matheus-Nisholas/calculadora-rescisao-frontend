@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-// ALTERADO: HttpHeaders não é mais necessário aqui.
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, tap, BehaviorSubject, switchMap, of } from 'rxjs';
 
@@ -37,15 +36,23 @@ export class AuthService {
     );
   }
   
+  /**
+   * Envia os dados de um novo usuário para a API de registro.
+   * @param userInfo Objeto com nome, email e senha.
+   * @returns Observable da resposta da API.
+   */
+  register(userInfo: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/auth/register`, userInfo);
+  }
+
   fetchAndStoreUser(): Observable<UserProfile> {
     const token = this.getToken();
     if (!token) {
         this.currentUserSubject.next(null);
         return of(null as any);
     }
-
-    // ALTERADO: A criação manual do cabeçalho foi removida!
-    // O interceptor cuidará disso automaticamente para nós.
+    
+    // O HttpInterceptor adiciona o cabeçalho de autorização automaticamente.
     return this.http.get<UserProfile>(`${this.apiUrl}/auth/me`).pipe(
       tap(user => {
         this.currentUserSubject.next(user);
