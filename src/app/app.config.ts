@@ -1,6 +1,7 @@
 import { HttpHandlerFn, HttpRequest } from "@angular/common/http";
 import { inject } from "@angular/core";
-import { AuthService } from "./auth.service";
+// CORRIGIDO: Removido o ponto final extra do caminho do arquivo.
+import { AuthService } from "./auth/auth.service"; 
 
 /**
  * Interceptor funcional que anexa o token JWT a todas as requisições

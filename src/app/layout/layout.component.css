@@ -49,3 +49,27 @@
   font-weight: 500;
   color: #555;
 }
+
+.main-nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.main-nav a {
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+  padding: 0.5rem 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.3s, border-bottom-color 0.3s;
+}
+
+.main-nav a:hover {
+  color: #007bff;
+}
+
+/* Este estilo será aplicado automaticamente pelo Angular na rota ativa */
+.main-nav a.active-link {
+  color: #007bff;
+  border-bottom-color: #007bff;
+}

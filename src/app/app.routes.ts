@@ -6,24 +6,22 @@ import { RegisterComponent } from './auth/register/register.component';
 import { LayoutComponent } from './layout/layout.component';
 import { CalculadoraComponent } from './calculadora/calculadora.component';
 
+import { HistoryComponent } from './history/history.component';
+
 export const routes: Routes = [
-  // Rotas públicas
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-
-  // Rotas privadas protegidas pelo AuthGuard
   {
     path: 'app',
     component: LayoutComponent,
     canActivate: [authGuard], 
     children: [
       { path: 'calculadora', component: CalculadoraComponent },
-      // Futuras rotas privadas, como 'historico', viriam aqui
+      // NOVO: Rota para a página de histórico
+      { path: 'historico', component: HistoryComponent },
       { path: '', redirectTo: 'calculadora', pathMatch: 'full' }
     ]
   },
-
-  // Redirecionamentos padrão
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/login' }
 ];

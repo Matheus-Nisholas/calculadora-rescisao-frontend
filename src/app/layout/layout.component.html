@@ -2,12 +2,15 @@
   <div class="header-content">
     <span class="app-title">Calculadora de Rescisão</span>
     
+    <nav class="main-nav">
+      <a routerLink="/app/calculadora" routerLinkActive="active-link">Calculadora</a>
+      <a routerLink="/app/historico" routerLinkActive="active-link">Histórico</a>
+    </nav>
+
     <div class="user-info">
       <span class="user-name">Olá, {{ user.nome }}</span>
-      
       <button (click)="logout()" class="btn-logout">Sair</button>
     </div>
-
   </div>
 </header>
 

@@ -1,0 +1,38 @@
+<div class="history-container">
+  <h2>Histórico de Cálculos</h2>
+
+  <div *ngIf="historico$ | async as historicoPage; else loading">
+    
+    <div *ngIf="historicoPage.content && historicoPage.content.length > 0; else noHistory">
+      <table>
+        <thead>
+          <tr>
+            <th>Data do Cálculo</th>
+            <th>Tipo de Rescisão</th>
+            <th>Salário Base</th>
+            <th>Data de Desligamento</th>
+            <th>Valor Líquido</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of historicoPage.content">
+            <td>{{ item.criadoEm | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td>{{ item.tipoRescisao | titlecase }}</td>
+            <td>{{ item.salarioMensal | currency:'BRL' }}</td>
+            <td>{{ item.dataDesligamento | date:'dd/MM/yyyy' }}</td>
+            <td class="valor-liquido">{{ item.totalLiquido | currency:'BRL' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #noHistory>
+      <p class="empty-message">Nenhum cálculo encontrado no seu histórico.</p>
+    </ng-template>
+
+  </div>
+
+  <ng-template #loading>
+    <p>Carregando histórico...</p>
+  </ng-template>
+</div>
