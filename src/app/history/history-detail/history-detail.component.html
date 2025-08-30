@@ -1,10 +1,19 @@
 <div class="detail-container" *ngIf="calculoDetail$ | async as calculo; else loading">
+  
   <div class="detail-header">
     <h2>Detalhes do Cálculo</h2>
-    <a mat-stroked-button routerLink="/app/historico">
-      <mat-icon>arrow_back</mat-icon>
-      Voltar para o Histórico
-    </a>
+    
+    <div>
+      <button mat-flat-button color="primary" (click)="baixarPdf(calculo.id)">
+        <mat-icon>download</mat-icon>
+        Baixar PDF
+      </button>
+
+      <a mat-stroked-button routerLink="/app/historico" class="back-link">
+        <mat-icon>arrow_back</mat-icon>
+        Voltar
+      </a>
+    </div>
   </div>
 
   <mat-card class="info-card">

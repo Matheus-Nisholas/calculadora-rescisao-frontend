@@ -35,12 +35,20 @@ export class CalculadoraService {
     );
   }
 
-  /**
-   * NOVO: Adicione este método.
-   * Envia uma requisição para excluir um cálculo do histórico.
-   * @param id O ID do cálculo a ser excluído.
-   */
   public excluirCalculo(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  /**
+   * Busca o PDF de um cálculo específico.
+   * @param id O ID do cálculo para gerar o PDF.
+   * @returns Um Observable contendo o arquivo PDF como um Blob.
+   */
+  public getPdfCalculo(id: number): Observable<Blob> {
+    // A opção { responseType: 'blob' } diz ao HttpClient para tratar a resposta
+    // como um arquivo binário, e não como um JSON.
+    return this.http.get(`${this.apiUrl}/${id}/pdf`, {
+      responseType: 'blob'
+    });
   }
 }

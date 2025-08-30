@@ -41,7 +41,6 @@ export class CalculadoraComponent implements OnInit {
     feriasVencidasDias: 0,
     saldoFgtsDepositado: null,
     numeroDependentes: 0,
-    // NOVO: Adicionado campo para o nome do empregado
     nomeEmpregado: '' 
   };
 
