@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 /**
  * Serviço que interage com os endpoints da API de rescisão.
@@ -38,4 +38,23 @@ export class CalculadoraService {
     });
   }
 
+  /**
+   * Obtém um cálculo específico do histórico pelo seu ID.
+   * @param id O ID do cálculo a ser buscado.
+   * @returns Observable com os dados do cálculo.
+   */
+  public getHistoricoPorId(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`).pipe(
+      // O backend retorna o breakdown como uma string JSON.
+      // Usamos o operador 'map' do RxJS para transformar a resposta
+      // e converter a string em um objeto JavaScript antes de entregar ao componente.
+      map(calculo => {
+        if (calculo && calculo.componentesJson) {
+          // Criamos uma nova propriedade 'componentes' com o JSON parseado
+          calculo.componentes = JSON.parse(calculo.componentesJson);
+        }
+        return calculo;
+      })
+    );
+  }
 }

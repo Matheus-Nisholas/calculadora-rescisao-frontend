@@ -1,0 +1,54 @@
+<div class="detail-container" *ngIf="calculoDetail$ | async as calculo; else loading">
+  <div class="detail-header">
+    <h2>Detalhes do Cálculo</h2>
+    <a routerLink="/app/historico" class="back-link">
+      &larr; Voltar para o Histórico
+    </a>
+  </div>
+
+  <div class="summary-card">
+    <h3>Resumo</h3>
+    <div class="summary-grid">
+      <div><strong>Tipo de Rescisão:</strong> {{ calculo.tipoRescisao | titlecase }}</div>
+      <div><strong>Data de Admissão:</strong> {{ calculo.dataAdmissão | date:'dd/MM/yyyy' }}</div>
+      <div><strong>Salário Base:</strong> {{ calculo.salarioMensal | currency:'BRL' }}</div>
+      <div><strong>Data de Desligamento:</strong> {{ calculo.dataDesligamento | date:'dd/MM/yyyy' }}</div>
+    </div>
+  </div>
+
+  <div class="breakdown-grid">
+    <div class="card proventos">
+      <h4>Proventos (Verbas Brutas)</h4>
+      <ul>
+        <li *ngFor="let comp of calculo.componentes">
+          <span>{{ comp.nome }}</span>
+          <span>{{ comp.valor | currency:'BRL' }}</span>
+        </li>
+      </ul>
+      <div class="total">
+        <span><strong>Total Bruto:</strong></span>
+        <span><strong>{{ calculo.totalBruto | currency:'BRL' }}</strong></span>
+      </div>
+    </div>
+
+    <div class="card descontos">
+      <h4>Descontos</h4>
+      <p class="desconto-info">
+        O detalhamento dos descontos não é salvo no histórico.
+      </p>
+      <div class="total">
+        <span><strong>Total Descontos:</strong></span>
+        <span><strong>{{ calculo.totalDescontos | currency:'BRL' }}</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="final-total-card">
+    <h3>Valor Líquido a Receber</h3>
+    <p>{{ calculo.totalLiquido | currency:'BRL' }}</p>
+  </div>
+</div>
+
+<ng-template #loading>
+  <p>Carregando detalhes...</p>
+</ng-template>

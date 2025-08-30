@@ -1,31 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router'; // Adicionado RouterLink e RouterLinkActive
 import { Observable } from 'rxjs';
-import { CommonModule } from '@angular/common'; // Necessário para usar a pipe 'async'
+import { CommonModule } from '@angular/common';
 
-// ALTERADO: Importamos o AuthService e o perfil do usuário
 import { AuthService, UserProfile } from '../auth/auth.service';
+
+// NOVO: Importações dos componentes do Angular Material
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [RouterOutlet, CommonModule],
+  // ALTERADO: Adicionamos os módulos do Material e do Router ao array de imports
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    MatToolbarModule,
+    MatButtonModule
+  ],
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css']
 })
 export class LayoutComponent {
 
-  // ALTERADO: Criamos um observable para os dados do usuário.
-  // A pipe 'async' no template fará o subscribe e unsubscribe automaticamente.
-  currentUser$: Observable<UserProfile | null>;
+  public currentUser$: Observable<UserProfile | null>;
 
   constructor(private authService: AuthService) {
     this.currentUser$ = this.authService.currentUser$;
   }
 
-  /**
-   * ALTERADO: Método que será chamado pelo botão "Sair".
-   */
   logout(): void {
     this.authService.logout();
   }

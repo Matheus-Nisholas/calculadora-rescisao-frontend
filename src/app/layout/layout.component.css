@@ -1,42 +1,23 @@
-.main-header {
-  background-color: #ffffff;
-  padding: 0 2rem;
-  border-bottom: 1px solid #e0e0e0;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.header-content {
+.main-toolbar {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  height: 60px;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
-.app-title {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #333;
+.main-nav {
+  margin: 0 24px;
 }
 
-.btn-logout {
-  padding: 0.5rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: transparent;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
+.main-nav a {
+  text-decoration: none;
 }
 
-.btn-logout:hover {
-  background-color: #f1f1f1;
+/* O Angular Material usa uma classe diferente para links ativos */
+.main-nav a.active-link {
+  background-color: rgba(255,255,255,0.1);
 }
 
-.main-content {
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+.toolbar-spacer {
+  flex: 1 1 auto; /* Este elemento flexível empurra o user-info para a direita */
 }
 
 .user-info {
@@ -45,31 +26,8 @@
   gap: 1rem;
 }
 
-.user-name {
-  font-weight: 500;
-  color: #555;
-}
-
-.main-nav {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.main-nav a {
-  text-decoration: none;
-  color: #555;
-  font-weight: 500;
-  padding: 0.5rem 0;
-  border-bottom: 2px solid transparent;
-  transition: color 0.3s, border-bottom-color 0.3s;
-}
-
-.main-nav a:hover {
-  color: #007bff;
-}
-
-/* Este estilo será aplicado automaticamente pelo Angular na rota ativa */
-.main-nav a.active-link {
-  color: #007bff;
-  border-bottom-color: #007bff;
+.main-content {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }

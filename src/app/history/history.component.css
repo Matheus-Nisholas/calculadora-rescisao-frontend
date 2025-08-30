@@ -75,3 +75,8 @@ tbody tr:hover {
   font-weight: 500;
   color: #555;
 }
+
+/* NOVO: Adiciona um cursor de ponteiro para indicar que as linhas são clicáveis */
+tbody tr {
+  cursor: pointer;
+}
