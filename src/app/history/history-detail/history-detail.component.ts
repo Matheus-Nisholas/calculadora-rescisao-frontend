@@ -4,17 +4,16 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 import { CalculadoraService } from '../../calculadora/calculadora.service';
 
-// NOVO: Importações dos componentes do Angular Material
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDividerModule } from '@angular/material/divider'; // NOVO: Importar MatDividerModule
 
 @Component({
   selector: 'app-history-detail',
   standalone: true,
-  // ALTERADO: Adicionamos os novos módulos ao array de imports
   imports: [
     CommonModule,
     RouterLink,
@@ -22,14 +21,16 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatListModule,
     MatIconModule,
     MatButtonModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDividerModule // Adicionado aqui
   ],
   templateUrl: './history-detail.component.html',
   styleUrls: ['./history-detail.component.css']
 })
 export class HistoryDetailComponent implements OnInit {
 
-  public calculoDetail$: Observable<any>;
+  // ALTERADO: Adicionado '!' para indicar ao TypeScript que será inicializada em ngOnInit.
+  public calculoDetail$!: Observable<any>;
 
   constructor(
     private route: ActivatedRoute,
