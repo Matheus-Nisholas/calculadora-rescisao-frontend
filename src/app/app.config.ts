@@ -1,12 +1,25 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { HttpHandlerFn, HttpRequest } from "@angular/common/http";
+import { inject } from "@angular/core";
+import { AuthService } from "./auth.service";
 
-import { routes } from './app.routes';
+/**
+ * Interceptor funcional que anexa o token JWT a todas as requisições
+ * HTTP que vão para a nossa API.
+ */
+export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
+  const authService = inject(AuthService);
+  const token = authService.getToken();
 
-export const appConfig: ApplicationConfig = {
-  providers: [
-    provideBrowserGlobalErrorListeners(),
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes)
-  ]
+  // Se não houver token, a requisição segue normalmente sem alterações.
+  if (!token) {
+    return next(req);
+  }
+
+  // Se houver um token, clonamos a requisição e adicionamos o cabeçalho.
+  const clonedReq = req.clone({
+    headers: req.headers.set('Authorization', `Bearer ${token}`)
+  });
+
+  // Enviamos a requisição clonada com o cabeçalho.
+  return next(clonedReq);
 };
