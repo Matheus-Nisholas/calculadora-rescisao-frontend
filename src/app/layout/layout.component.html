@@ -1,0 +1,16 @@
+<header class="main-header" *ngIf="currentUser$ | async as user">
+  <div class="header-content">
+    <span class="app-title">Calculadora de Rescisão</span>
+    
+    <div class="user-info">
+      <span class="user-name">Olá, {{ user.nome }}</span>
+      
+      <button (click)="logout()" class="btn-logout">Sair</button>
+    </div>
+
+  </div>
+</header>
+
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>
