@@ -1,14 +1,30 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router'; // Adicionado RouterLink
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-// ALTERADO: Importamos nosso novo serviço.
 import { AuthService } from '../auth.service';
+
+// NOVO: Importações dos componentes do Angular Material
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  // ALTERADO: Adicionamos os módulos do Material, incluindo MatCardModule
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterLink, // Adicionado para o link de registro
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatProgressSpinnerModule
+  ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -19,30 +35,25 @@ export class LoginComponent {
     senha: ''
   };
 
-  // Mensagem de erro para exibir no template
   errorMessage: string | null = null;
+  isLoading = false;
 
-  // ALTERADO: Injetamos o AuthService e o Router.
   constructor(
     private authService: AuthService,
     private router: Router
   ) {}
 
-  /**
-   * ALTERADO: O método agora chama o serviço de autenticação.
-   */
   login(): void {
-    this.errorMessage = null; // Limpa erros anteriores
+    this.errorMessage = null;
+    this.isLoading = true;
+
     this.authService.login(this.credentials).subscribe({
       next: (response) => {
-        // Se o login for bem-sucedido, o serviço já salvou o token.
-        // Nós apenas navegamos para a página principal da aplicação.
-        console.log('Login bem-sucedido!', response);
+        this.isLoading = false;
         this.router.navigate(['/app/calculadora']);
       },
       error: (err) => {
-        // Se ocorrer um erro (ex: 401 Unauthorized), exibimos uma mensagem.
-        console.error('Erro no login:', err);
+        this.isLoading = false;
         this.errorMessage = 'Email ou senha inválidos. Tente novamente.';
       }
     });

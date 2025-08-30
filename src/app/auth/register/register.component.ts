@@ -1,20 +1,36 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router'; // ALTERADO: Importamos o RouterLink
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../auth.service';
 
+// ALTERADO: Importações dos componentes do Angular Material
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  // ALTERADO: Adicionamos RouterLink e todos os módulos do Material necessários
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterLink,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatProgressSpinnerModule
+  ],
   templateUrl: './register.component.html',
-  // Usaremos o mesmo CSS do login para manter a consistência visual
+  // Reutilizamos o mesmo CSS do login para manter a consistência
   styleUrls: ['../login/login.component.css']
 })
 export class RegisterComponent {
 
-  // Objeto para os dados do formulário de registro
   userData = {
     nome: '',
     email: '',
@@ -23,6 +39,7 @@ export class RegisterComponent {
 
   errorMessage: string | null = null;
   successMessage: string | null = null;
+  isLoading = false;
 
   constructor(
     private authService: AuthService,
@@ -32,16 +49,18 @@ export class RegisterComponent {
   register(): void {
     this.errorMessage = null;
     this.successMessage = null;
+    this.isLoading = true;
 
     this.authService.register(this.userData).subscribe({
       next: () => {
+        this.isLoading = false;
         this.successMessage = 'Cadastro realizado com sucesso! Redirecionando para o login...';
-        // Após 2 segundos, navega para a tela de login
         setTimeout(() => {
           this.router.navigate(['/login']);
         }, 2000);
       },
       error: (err) => {
+        this.isLoading = false;
         console.error('Erro no registro:', err);
         if (err.status === 400) {
           this.errorMessage = 'Este email já está em uso. Por favor, tente outro.';
