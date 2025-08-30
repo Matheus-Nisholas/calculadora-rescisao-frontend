@@ -1,9 +1,9 @@
 <div class="history-container">
   <h2>Histórico de Cálculos</h2>
 
-  <div *ngIf="historico$ | async as historicoPage; else loading">
+  <div *ngIf="historicoPage$ | async as pageData; else loading">
     
-    <div *ngIf="historicoPage.content && historicoPage.content.length > 0; else noHistory">
+    <div *ngIf="pageData.content && pageData.content.length > 0; else noHistory">
       <table>
         <thead>
           <tr>
@@ -15,7 +15,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of historicoPage.content">
+          <tr *ngFor="let item of pageData.content">
             <td>{{ item.criadoEm | date:'dd/MM/yyyy HH:mm' }}</td>
             <td>{{ item.tipoRescisao | titlecase }}</td>
             <td>{{ item.salarioMensal | currency:'BRL' }}</td>
@@ -24,6 +24,13 @@
           </tr>
         </tbody>
       </table>
+
+      <div class="pagination-controls">
+        <button (click)="previousPage()" [disabled]="pageData.first">Anterior</button>
+        <span>Página {{ pageData.number + 1 }} de {{ pageData.totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="pageData.last">Próxima</button>
+      </div>
+
     </div>
 
     <ng-template #noHistory>
