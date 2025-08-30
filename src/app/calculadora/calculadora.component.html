@@ -1,98 +1,106 @@
-<div class="calculadora-container">
-  <h2>Calcular Rescisão</h2>
-  <form (ngSubmit)="calcular()">
-    <div class="form-group">
-      <label for="tipoRescisao">Tipo de Rescisão:</label>
-      <select id="tipoRescisao" [(ngModel)]="calculoRequest.tipoRescisao" name="tipoRescisao">
-        <option value="SEM_JUSTA_CAUSA">Sem Justa Causa</option>
-        <option value="JUSTA_CAUSA">Justa Causa</option>
-        <option value="PEDIDO_DEMISSAO">Pedido de Demissão</option>
-        <option value="ACORDO_484A">Acordo Art. 484-A</option>
-        <option value="TERMO_CONTRATO">Término de Contrato</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="salarioMensal">Salário Mensal:</label>
-      <input type="number" id="salarioMensal" [(ngModel)]="calculoRequest.salarioMensal" name="salarioMensal" required>
-    </div>
-    <div class="form-group">
-      <label for="dataAdmissao">Data de Admissão:</label>
-      <input type="date" id="dataAdmissao" [(ngModel)]="calculoRequest.dataAdmissao" name="dataAdmissao" required>
-    </div>
-    <div class="form-group">
-      <label for="dataDesligamento">Data de Desligamento:</label>
-      <input type="date" id="dataDesligamento" [(ngModel)]="calculoRequest.dataDesligamento" name="dataDesligamento" required>
-    </div>
-    <div class="form-group">
-      <label for="avisoIndenizado">Aviso Indenizado:</label>
-      <input type="checkbox" id="avisoIndenizado" [(ngModel)]="calculoRequest.avisoIndenizado" name="avisoIndenizado">
-    </div>
-    <div class="form-group">
-      <label for="feriasVencidasDias">Férias Vencidas (dias):</label>
-      <input type="number" id="feriasVencidasDias" [(ngModel)]="calculoRequest.feriasVencidasDias" name="feriasVencidasDias">
-    </div>
-    <div class="form-group">
-      <label for="saldoFgtsDepositado">Saldo FGTS:</label>
-      <input type="number" id="saldoFgtsDepositado" [(ngModel)]="calculoRequest.saldoFgtsDepositado" name="saldoFgtsDepositado">
-    </div>
+<div class="calculadora-page-container">
+  
+  <mat-card class="form-card">
+    <mat-card-header>
+      <mat-card-title>Calcular Rescisão</mat-card-title>
+      <mat-card-subtitle>Preencha os dados para simular o cálculo</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form (ngSubmit)="calcular()" class="calculadora-form">
+        
+        <mat-form-field appearance="outline">
+          <mat-label>Tipo de Rescisão</mat-label>
+          <mat-select [(ngModel)]="calculoRequest.tipoRescisao" name="tipoRescisao">
+            <mat-option value="SEM_JUSTA_CAUSA">Sem Justa Causa</mat-option>
+            <mat-option value="JUSTA_CAUSA">Justa Causa</mat-option>
+            <mat-option value="PEDIDO_DEMISSAO">Pedido de Demissão</mat-option>
+            <mat-option value="ACORDO_484A">Acordo Art. 484-A</mat-option>
+            <mat-option value="TERMO_CONTRATO">Término de Contrato</mat-option>
+          </mat-select>
+        </mat-form-field>
 
-    <div class="form-group">
-      <label for="numeroDependentes">Número de Dependentes (para IRRF):</label>
-      <input type="number" id="numeroDependentes" [(ngModel)]="calculoRequest.numeroDependentes" name="numeroDependentes" min="0">
-    </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Salário Mensal</mat-label>
+          <input matInput type="number" placeholder="Ex: 3000.00" [(ngModel)]="calculoRequest.salarioMensal" name="salarioMensal" required>
+        </mat-form-field>
 
-    <button type="submit">Calcular</button>
-  </form>
+        <mat-form-field appearance="outline">
+          <mat-label>Data de Admissão</mat-label>
+          <input matInput [matDatepicker]="pickerAdmissao" [(ngModel)]="calculoRequest.dataAdmissao" name="dataAdmissao" required>
+          <mat-datepicker-toggle matSuffix [for]="pickerAdmissao"></mat-datepicker-toggle>
+          <mat-datepicker #pickerAdmissao></mat-datepicker>
+        </mat-form-field>
 
-  <div *ngIf="resultado" class="resultado-container">
-    <h3>Resultado do Cálculo</h3>
-    
-    <h4>Proventos (Verbas Brutas)</h4>
-    <ul>
-      <li *ngFor="let comp of resultado.componentes">
-        {{ comp.nome }}: {{ comp.valor | currency:'BRL' }}
-      </li>
-    </ul>
-    <p class="total-bruto">Total Bruto: {{ resultado.totalBruto | currency:'BRL' }}</p>
+        <mat-form-field appearance="outline">
+          <mat-label>Data de Desligamento</mat-label>
+          <input matInput [matDatepicker]="pickerDesligamento" [(ngModel)]="calculoRequest.dataDesligamento" name="dataDesligamento" required>
+          <mat-datepicker-toggle matSuffix [for]="pickerDesligamento"></mat-datepicker-toggle>
+          <mat-datepicker #pickerDesligamento></mat-datepicker>
+        </mat-form-field>
 
-    <div *ngIf="resultado.descontos && resultado.descontos.length > 0">
-      <h4>Descontos</h4>
-      <ul>
-        <li *ngFor="let desc of resultado.descontos">
-          {{ desc.nome }}: {{ desc.valor | currency:'BRL' }}
-        </li>
-      </ul>
-      <p class="total-descontos">Total Descontos: {{ resultado.totalDescontos | currency:'BRL' }}</p>
-    </div>
-    
-    <p class="total-liquido">Total Líquido a Receber: {{ resultado.totalLiquido | currency:'BRL' }}</p>
-    <p>Pagamento até: {{ resultado.pagamentoAte | date:'dd/MM/yyyy' }}</p>
+        <mat-form-field appearance="outline">
+          <mat-label>Saldo FGTS</mat-label>
+          <input matInput type="number" [(ngModel)]="calculoRequest.saldoFgtsDepositado" name="saldoFgtsDepositado">
+        </mat-form-field>
 
+        <mat-form-field appearance="outline">
+          <mat-label>Dias de Férias Vencidas</mat-label>
+          <input matInput type="number" [(ngModel)]="calculoRequest.feriasVencidasDias" name="feriasVencidasDias">
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline">
+          <mat-label>Nº de Dependentes (IRRF)</mat-label>
+          <input matInput type="number" [(ngModel)]="calculoRequest.numeroDependentes" name="numeroDependentes">
+        </mat-form-field>
+        
+        <mat-checkbox [(ngModel)]="calculoRequest.avisoIndenizado" name="avisoIndenizado" class="checkbox-aviso">
+          Houve aviso prévio indenizado?
+        </mat-checkbox>
+        
+        <button mat-raised-button color="primary" type="submit">Calcular</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="resultado-container" *ngIf="resultado">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Resultado do Cálculo</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h4>Proventos</h4>
+        <ul class="breakdown-list">
+          <li *ngFor="let comp of resultado.componentes">
+            <span>{{ comp.nome }}</span>
+            <span>{{ comp.valor | currency:'BRL' }}</span>
+          </li>
+        </ul>
+        <div class="total-line total-bruto">
+          <span><strong>Total Bruto</strong></span>
+          <span><strong>{{ resultado.totalBruto | currency:'BRL' }}</strong></span>
+        </div>
+
+        <div *ngIf="resultado.descontos && resultado.descontos.length > 0" class="descontos-section">
+          <h4>Descontos</h4>
+          <ul class="breakdown-list">
+            <li *ngFor="let desc of resultado.descontos">
+              <span>{{ desc.nome }}</span>
+              <span>{{ desc.valor | currency:'BRL' }}</span>
+            </li>
+          </ul>
+          <div class="total-line total-descontos">
+            <span><strong>Total Descontos</strong></span>
+            <span><strong>{{ resultado.totalDescontos | currency:'BRL' }}</strong></span>
+          </div>
+        </div>
+
+        <div class="total-liquido-card">
+          <h4>Valor Líquido a Receber</h4>
+          <p>{{ resultado.totalLiquido | currency:'BRL' }}</p>
+        </div>
+        <p class="pagamento-info">Pagamento a ser efetuado até: {{ resultado.pagamentoAte | date:'dd/MM/yyyy' }}</p>
+      </mat-card-content>
+    </mat-card>
   </div>
 
-  <div *ngIf="historico.length > 0" class="historico-container">
-    <h3>Histórico de Cálculos</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Data</th>
-          <th>Salário</th>
-          <th>Admissão</th>
-          <th>Desligamento</th>
-          <th>Total Bruto</th>
-          <th>Total Líquido</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of historico">
-          <td>{{ item.criadoEm | date:'short' }}</td>
-          <td>{{ item.salarioMensal | currency:'BRL' }}</td>
-          <td>{{ item.dataAdmissao | date:'dd/MM/yyyy' }}</td>
-          <td>{{ item.dataDesligamento | date:'dd/MM/yyyy' }}</td>
-          <td>{{ item.totalBruto | currency:'BRL' }}</td>
-          <td>{{ item.totalLiquido | currency:'BRL' }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
 </div>
