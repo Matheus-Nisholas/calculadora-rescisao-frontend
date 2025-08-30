@@ -4,10 +4,26 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 import { CalculadoraService } from '../../calculadora/calculadora.service';
 
+// NOVO: Importações dos componentes do Angular Material
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 @Component({
   selector: 'app-history-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  // ALTERADO: Adicionamos os novos módulos ao array de imports
+  imports: [
+    CommonModule,
+    RouterLink,
+    MatCardModule,
+    MatListModule,
+    MatIconModule,
+    MatButtonModule,
+    MatProgressSpinnerModule
+  ],
   templateUrl: './history-detail.component.html',
   styleUrls: ['./history-detail.component.css']
 })
@@ -21,8 +37,6 @@ export class HistoryDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Usamos a rota ativa para pegar o parâmetro 'id' da URL
-    // e em seguida chamamos o serviço para buscar os detalhes.
     this.calculoDetail$ = this.route.paramMap.pipe(
       switchMap(params => {
         const id = Number(params.get('id'));
