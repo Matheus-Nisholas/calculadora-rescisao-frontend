@@ -1,26 +1,16 @@
-import { HttpHandlerFn, HttpRequest } from "@angular/common/http";
-import { inject } from "@angular/core";
-// CORRIGIDO: Removido o ponto final extra do caminho do arquivo.
-import { AuthService } from "./auth/auth.service"; 
+import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './auth/auth.interceptor';
+import { routes } from './app.routes';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
-/**
- * Interceptor funcional que anexa o token JWT a todas as requisições
- * HTTP que vão para a nossa API.
- */
-export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
-  const authService = inject(AuthService);
-  const token = authService.getToken();
-
-  // Se não houver token, a requisição segue normalmente sem alterações.
-  if (!token) {
-    return next(req);
-  }
-
-  // Se houver um token, clonamos a requisição e adicionamos o cabeçalho.
-  const clonedReq = req.clone({
-    headers: req.headers.set('Authorization', `Bearer ${token}`)
-  });
-
-  // Enviamos a requisição clonada com o cabeçalho.
-  return next(clonedReq);
+// A palavra "export" aqui é crucial.
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes),
+    provideHttpClient(withInterceptors([authInterceptor])),
+    provideAnimationsAsync()
+  ]
 };
