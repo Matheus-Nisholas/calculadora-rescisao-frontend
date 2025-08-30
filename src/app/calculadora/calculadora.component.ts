@@ -3,19 +3,19 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CalculadoraService } from './calculadora.service';
 
-// NOVO: Importações dos componentes de formulário do Angular Material
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { provideNativeDateAdapter } from '@angular/material/core'; // Necessário para o Datepicker
+import { provideNativeDateAdapter } from '@angular/material/core';
+// ALTERADO: Faltava importar o MatCardModule.
+import { MatCardModule } from '@angular/material/card'; 
 
 @Component({
   selector: 'app-calculadora',
   standalone: true,
-  // ALTERADO: Adicionamos os novos módulos ao array de imports
   imports: [
     CommonModule,
     FormsModule,
@@ -24,15 +24,15 @@ import { provideNativeDateAdapter } from '@angular/material/core'; // Necessári
     MatSelectModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatCardModule // Adicionado aqui
   ],
-  // NOVO: Adicionamos o provider para o Datepicker
   providers: [provideNativeDateAdapter()],
   templateUrl: './calculadora.component.html',
   styleUrls: ['./calculadora.css']
 })
 export class CalculadoraComponent implements OnInit {
-
+  // O restante da classe permanece o mesmo...
   public calculoRequest = {
     tipoRescisao: 'SEM_JUSTA_CAUSA',
     salarioMensal: null,
@@ -45,24 +45,15 @@ export class CalculadoraComponent implements OnInit {
   };
 
   public resultado: any | null = null;
-  public historico: any[] = []; // Este histórico não é mais exibido aqui, mas mantemos a lógica
+  public historico: any[] = []; 
 
   constructor(private calculadoraService: CalculadoraService) { }
-
-  ngOnInit(): void {
-    // A busca do histórico agora acontece na página de Histórico
-  }
+  ngOnInit(): void { }
 
   public calcular(): void {
-    // A lógica de cálculo permanece a mesma
     this.calculadoraService.calcular(this.calculoRequest).subscribe({
-      next: (response) => {
-        this.resultado = response;
-        // Não precisamos mais recarregar o histórico aqui
-      },
-      error: (err) => {
-        console.error('Erro ao calcular rescisão:', err);
-      }
+      next: (response) => { this.resultado = response; },
+      error: (err) => { console.error('Erro ao calcular rescisão:', err); }
     });
   }
 }
