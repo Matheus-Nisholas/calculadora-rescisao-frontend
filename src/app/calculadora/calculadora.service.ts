@@ -27,8 +27,15 @@ export class CalculadoraService {
   public getHistoricoPorId(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`).pipe(
       map(calculo => {
-        if (calculo && calculo.componentesJson) {
-          calculo.componentes = JSON.parse(calculo.componentesJson);
+        if (calculo && typeof calculo.componentesJson === 'string') {
+          try {
+            calculo.componentes = JSON.parse(calculo.componentesJson);
+          } catch (e) {
+            console.error('Falha ao parsear o JSON de componentes:', e);
+            calculo.componentes = [];
+          }
+        } else {
+          calculo.componentes = [];
         }
         return calculo;
       })
@@ -39,14 +46,7 @@ export class CalculadoraService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  /**
-   * Busca o PDF de um cálculo específico.
-   * @param id O ID do cálculo para gerar o PDF.
-   * @returns Um Observable contendo o arquivo PDF como um Blob.
-   */
   public getPdfCalculo(id: number): Observable<Blob> {
-    // A opção { responseType: 'blob' } diz ao HttpClient para tratar a resposta
-    // como um arquivo binário, e não como um JSON.
     return this.http.get(`${this.apiUrl}/${id}/pdf`, {
       responseType: 'blob'
     });

@@ -6,30 +6,31 @@ import { CalculadoraService } from '../../calculadora/calculadora.service';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
+// ALTERADO: Adicionamos MatIconModule e MatButtonModule
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDividerModule } from '@angular/material/divider'; // NOVO: Importar MatDividerModule
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-history-detail',
   standalone: true,
+  // ALTERADO: Adicionamos os módulos que faltavam ao array de imports
   imports: [
     CommonModule,
     RouterLink,
     MatCardModule,
     MatListModule,
-    MatIconModule,
-    MatButtonModule,
+    MatIconModule, // Necessário para <mat-icon>
+    MatButtonModule, // Necessário para mat-flat-button e mat-stroked-button
     MatProgressSpinnerModule,
-    MatDividerModule // Adicionado aqui
+    MatDividerModule
   ],
   templateUrl: './history-detail.component.html',
   styleUrls: ['./history-detail.component.css']
 })
 export class HistoryDetailComponent implements OnInit {
 
-  // ALTERADO: Adicionado '!' para indicar ao TypeScript que será inicializada em ngOnInit.
   public calculoDetail$!: Observable<any>;
 
   constructor(
@@ -44,5 +45,23 @@ export class HistoryDetailComponent implements OnInit {
         return this.calculadoraService.getHistoricoPorId(id);
       })
     );
+  }
+
+  baixarPdf(id: number): void {
+    this.calculadoraService.getPdfCalculo(id).subscribe({
+      next: (blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `recibo_rescisao_${id}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      },
+      error: (err) => {
+        console.error('Erro ao baixar o PDF:', err);
+      }
+    });
   }
 }
