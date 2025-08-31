@@ -1,47 +1,65 @@
+:host {
+  display: block;
+}
+
 .calculadora-container {
   display: grid;
-  grid-template-columns: 1.5fr 1fr; /* Coluna do formulário maior que a de resultados */
+  grid-template-columns: 1.5fr 1fr;
   gap: 2rem;
   align-items: flex-start;
-  padding: 2rem; /* Adiciona um padding geral para a área de conteúdo */
-  background-color: #f5f5f5; /* Cor de fundo levemente diferente para contraste */
 }
 
 mat-card {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para todos os cards */
-  border-radius: 8px; /* Borda arredondada */
+  /* Efeito de Vidro Fosco (Glassmorphism) */
+  background: var(--card-background-color);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 24px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 32px 0 var(--shadow-color);
+  padding: 1.5rem 2rem;
 }
 
 mat-card-title {
   font-weight: 600;
-  color: var(--mat-grey-800, #424242);
+  margin-bottom: 0.5rem;
+  color: #1A202C;
 }
 
 mat-card-subtitle {
-  color: var(--mat-grey-600, #757575);
+  margin-bottom: 2.5rem;
+  color: var(--text-color-light);
 }
 
 .calculator-form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .checkbox-aviso {
-  margin: 0.5rem 0;
+  margin-top: 0.5rem;
 }
 
 .form-actions {
   display: flex;
   gap: 1rem;
   justify-content: flex-end;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+}
+
+.form-actions button {
+  border-radius: 20px;
+  padding: 0 24px;
+  height: 44px;
+  font-weight: 500;
+  border-width: 1.5px;
 }
 
 .results-column {
@@ -50,57 +68,35 @@ mat-card-subtitle {
   gap: 2rem;
 }
 
-.breakdown-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  font-size: 0.9rem;
-}
-
-.breakdown-list li {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.8rem 0;
-  color: #555;
-}
-
-.breakdown-list li .value {
+.results-card .value {
   font-weight: 500;
-  color: #333;
-}
-
-mat-divider {
-  margin: 0.5rem 0;
+  color: var(--text-color);
 }
 
 .total-line {
   display: flex;
   justify-content: space-between;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 600;
   padding-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 .total-line .total-value {
-  color: var(--mat-primary-main-color, #3f51b5); /* Usa a cor primária do tema */
+  color: var(--primary-color);
 }
 
-/* NOVO: Estilos para o histórico resumido */
 .history-card mat-list-item {
   cursor: pointer;
-  border-bottom: 1px solid #eee; /* Linha divisória para itens da lista */
-}
-
-.history-card mat-list-item:last-child {
-  border-bottom: none;
+  transition: background-color 0.2s;
 }
 
 .history-card mat-list-item:hover {
-  background-color: #f0f0f0;
+  background-color: rgba(0,0,0,0.03);
 }
 
 .history-placeholder {
-  color: #777;
+  color: var(--text-color-light);
   text-align: center;
   padding: 1rem;
 }
@@ -108,10 +104,12 @@ mat-divider {
 .full-history-button {
   width: 100%;
   margin-top: 1rem;
+  border-radius: 20px;
+  height: 44px;
 }
 
 /* Responsividade */
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
   .calculadora-container {
     grid-template-columns: 1fr;
   }
