@@ -43,7 +43,7 @@
       <button mat-stroked-button (click)="nextPage()" [disabled]="pageData.last">Próxima</button>
     </div>
 
-    <div *ngIf="!pageData || pageData.totalElements === 0" class="empty-message">
+    <div *ngIf="!isLoading && (!pageData || pageData.totalElements === 0)" class="empty-message">
       Nenhum cálculo encontrado no seu histórico.
     </div>
   </div>
