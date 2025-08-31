@@ -1,18 +1,16 @@
-<div class="calculadora-layout">
-  
-  <mat-card class="form-card">
-    <mat-card-header>
-      <mat-card-title>Calcular Rescisão</mat-card-title>
-      <mat-card-subtitle>Preencha os dados para simular o cálculo</mat-card-subtitle>
-    </mat-card-header>
+<div class="calculadora-container">
+
+  <mat-card class="calculator-form-card">
+    <mat-card-title>Calcular Rescisão</mat-card-title>
+    <mat-card-subtitle>Preencha os dados para simular o cálculo</mat-card-subtitle>
     <mat-card-content>
-      <form (ngSubmit)="calcular()" class="calculadora-form">
+      <form (ngSubmit)="calcular()" class="calculator-form">
         
         <mat-form-field appearance="outline">
-          <mat-label>Nome do Empregado (Opcional)</mat-label>
-          <input matInput type="text" [(ngModel)]="calculoRequest.nomeEmpregado" name="nomeEmpregado">
+            <mat-label>Nome do Empregado (Opcional)</mat-label>
+            <input matInput type="text" [(ngModel)]="calculoRequest.nomeEmpregado" name="nomeEmpregado">
         </mat-form-field>
-
+        
         <mat-form-field appearance="outline">
           <mat-label>Tipo de Rescisão</mat-label>
           <mat-select [(ngModel)]="calculoRequest.tipoRescisao" name="tipoRescisao">
@@ -24,86 +22,104 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Salário Mensal</mat-label>
-          <input matInput type="number" placeholder="Ex: 3000.00" [(ngModel)]="calculoRequest.salarioMensal" name="salarioMensal" required>
-        </mat-form-field>
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Salário Mensal</mat-label>
+            <span matPrefix>R$&nbsp;</span>
+            <input matInput type="number" placeholder="5.000,00" [(ngModel)]="calculoRequest.salarioMensal" name="salarioMensal" required>
+          </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Data de Admissão</mat-label>
-          <input matInput [matDatepicker]="pickerAdmissao" [(ngModel)]="calculoRequest.dataAdmissao" name="dataAdmissao" required>
-          <mat-datepicker-toggle matSuffix [for]="pickerAdmissao"></mat-datepicker-toggle>
-          <mat-datepicker #pickerAdmissao></mat-datepicker>
-        </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Data de Admissão</mat-label>
+            <input matInput [matDatepicker]="pickerAdmissao" [(ngModel)]="calculoRequest.dataAdmissao" name="dataAdmissao" required>
+            <mat-datepicker-toggle matSuffix [for]="pickerAdmissao"></mat-datepicker-toggle>
+            <mat-datepicker #pickerAdmissao></mat-datepicker>
+          </mat-form-field>
+        </div>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Data de Desligamento</mat-label>
-          <input matInput [matDatepicker]="pickerDesligamento" [(ngModel)]="calculoRequest.dataDesligamento" name="dataDesligamento" required>
-          <mat-datepicker-toggle matSuffix [for]="pickerDesligamento"></mat-datepicker-toggle>
-          <mat-datepicker #pickerDesligamento></mat-datepicker>
-        </mat-form-field>
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Data de Desligamento</mat-label>
+            <input matInput [matDatepicker]="pickerDesligamento" [(ngModel)]="calculoRequest.dataDesligamento" name="dataDesligamento" required>
+            <mat-datepicker-toggle matSuffix [for]="pickerDesligamento"></mat-datepicker-toggle>
+            <mat-datepicker #pickerDesligamento></mat-datepicker>
+          </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Saldo FGTS</mat-label>
-          <input matInput type="number" [(ngModel)]="calculoRequest.saldoFgtsDepositado" name="saldoFgtsDepositado">
-        </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Saldo FGTS</mat-label>
+            <span matPrefix>R$&nbsp;</span>
+            <input matInput type="number" placeholder="12.000,00" [(ngModel)]="calculoRequest.saldoFgtsDepositado" name="saldoFgtsDepositado">
+          </mat-form-field>
+        </div>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Dias de Férias Vencidas</mat-label>
-          <input matInput type="number" [(ngModel)]="calculoRequest.feriasVencidasDias" name="feriasVencidasDias">
-        </mat-form-field>
-        
-        <mat-form-field appearance="outline">
-          <mat-label>Nº de Dependentes (IRRF)</mat-label>
-          <input matInput type="number" [(ngModel)]="calculoRequest.numeroDependentes" name="numeroDependentes">
-        </mat-form-field>
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Dias de Férias Venc.</mat-label>
+            <input matInput type="number" placeholder="0" [(ngModel)]="calculoRequest.feriasVencidasDias" name="feriasVencidasDias">
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline">
+            <mat-label>Nº de Dependentes (IRRF)</mat-label>
+            <input matInput type="number" placeholder="0" [(ngModel)]="calculoRequest.numeroDependentes" name="numeroDependentes">
+          </mat-form-field>
+        </div>
         
         <mat-checkbox [(ngModel)]="calculoRequest.avisoIndenizado" name="avisoIndenizado" class="checkbox-aviso">
           Houve aviso prévio indenizado?
         </mat-checkbox>
-        
-        <button mat-raised-button color="primary" type="submit">Calcular</button>
+
+        <div class="form-actions">
+          <button mat-stroked-button type="button" (click)="limpar()">Limpar</button>
+          <button mat-flat-button color="primary" type="submit">Calcular</button>
+        </div>
+
       </form>
     </mat-card-content>
   </mat-card>
 
-  <div class="resultado-container" *ngIf="resultado">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Resultado do Cálculo</mat-card-title>
-      </mat-card-header>
+  <div class="results-column">
+    <mat-card class="results-card" *ngIf="resultado">
+      <mat-card-title>Resultado</mat-card-title>
       <mat-card-content>
-        <h4>Proventos</h4>
         <ul class="breakdown-list">
           <li *ngFor="let comp of resultado.componentes">
             <span>{{ comp.nome }}</span>
-            <span>{{ comp.valor | currency:'BRL' }}</span>
+            <span class="value">{{ comp.valor | currency:'BRL' }}</span>
           </li>
         </ul>
-        <div class="total-line total-bruto">
-          <span><strong>Total Bruto</strong></span>
-          <span><strong>{{ resultado.totalBruto | currency:'BRL' }}</strong></span>
+        <mat-divider></mat-divider>
+        <div class="total-line">
+          <span>Total Líquido</span>
+          <span class="total-value">{{ resultado.totalLiquido | currency:'BRL' }}</span>
         </div>
+      </mat-card-content>
+    </mat-card>
 
-        <div *ngIf="resultado.descontos && resultado.descontos.length > 0" class="descontos-section">
-          <h4>Descontos</h4>
-          <ul class="breakdown-list">
-            <li *ngFor="let desc of resultado.descontos">
-              <span>{{ desc.nome }}</span>
-              <span>{{ desc.valor | currency:'BRL' }}</span>
-            </li>
-          </ul>
-          <div class="total-line total-descontos">
-            <span><strong>Total Descontos</strong></span>
-            <span><strong>{{ resultado.totalDescontos | currency:'BRL' }}</strong></span>
-          </div>
+    <mat-card class="history-card">
+      <mat-card-title>Últimos Cálculos</mat-card-title>
+      <mat-card-content>
+        <div *ngIf="ultimosCalculos.length > 0; else noHistory">
+          <mat-list>
+            <mat-list-item *ngFor="let calc of ultimosCalculos" (click)="navegarParaDetalhes(calc.id)">
+              <div matListItemTitle>
+                {{ calc.nomeEmpregado || 'N/A' }} ({{ calc.tipoRescisao | titlecase }})
+              </div>
+              <div matListItemLine>
+                {{ calc.totalLiquido | currency:'BRL' }} - {{ calc.criadoEm | date:'short' }}
+              </div>
+              <mat-divider [inset]="true"></mat-divider>
+            </mat-list-item>
+          </mat-list>
+          <button mat-flat-button color="accent" class="full-history-button" (click)="navegarParaHistoricoCompleto()">
+            Ver Histórico Completo
+          </button>
         </div>
-
-        <div class="total-liquido-card">
-          <h4>Valor Líquido a Receber</h4>
-          <p>{{ resultado.totalLiquido | currency:'BRL' }}</p>
-        </div>
-        <p class="pagamento-info">Pagamento a ser efetuado até: {{ resultado.pagamentoAte | date:'dd/MM/yyyy' }}</p>
+        <ng-template #noHistory>
+          <p class="history-placeholder">Nenhum cálculo recente encontrado.</p>
+          <button mat-flat-button color="accent" class="full-history-button" (click)="navegarParaHistoricoCompleto()">
+            Ver Histórico Completo
+          </button>
+        </ng-template>
       </mat-card-content>
     </mat-card>
   </div>
