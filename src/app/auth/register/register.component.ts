@@ -27,7 +27,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   ],
   templateUrl: './register.component.html',
   // Reutilizamos o mesmo CSS do login para manter a consistência
-  styleUrls: ['../login/login.component.css']
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
 
