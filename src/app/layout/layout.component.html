@@ -1,18 +1,24 @@
-<mat-toolbar color="primary" class="main-toolbar" *ngIf="currentUser$ | async as user">
-  <span>Calculadora de Rescisão</span>
+<header class="app-header">
+  <div class="header-content">
+    
+    <div class="header-left">
+      <span class="app-title">Calculadora de Rescisão</span>
+      <nav class="main-nav">
+        <a routerLink="/app/calculadora" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">Calculadora</a>
+        <a routerLink="/app/historico" routerLinkActive="active-link">Histórico</a>
+      </nav>
+    </div>
 
-  <nav class="main-nav">
-    <a mat-button routerLink="/app/calculadora" routerLinkActive="active-link">Calculadora</a>
-    <a mat-button routerLink="/app/historico" routerLinkActive="active-link">Histórico</a>
-  </nav>
+    <div class="header-right" *ngIf="currentUser$ | async as user">
+      <span class="user-name">Olá, {{ user.nome }}</span>
+      <div class="user-avatar">
+        <mat-icon>person</mat-icon>
+      </div>
+      <button mat-stroked-button (click)="logout()">Sair</button>
+    </div>
 
-  <span class="toolbar-spacer"></span>
-
-  <div class="user-info">
-    <span class="user-name">Olá, {{ user.nome }}</span>
-    <button mat-stroked-button (click)="logout()">Sair</button>
   </div>
-</mat-toolbar>
+</header>
 
 <main class="main-content">
   <router-outlet></router-outlet>
