@@ -9,15 +9,15 @@ import { CalculadoraService } from '../calculadora/calculadora.service';
 import { Page, HistoricoItem } from './history.model';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
-// ALTERADO: Adicionamos MatDialogModule
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../shared/components/confirm-dialog/confirm-dialog.component';
+// NOVO: Importação do módulo de abas
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-history',
   standalone: true,
-  // ALTERADO: Adicionamos MatDialogModule ao array de imports
+  // ALTERADO: Adicionamos MatTabsModule ao array de imports
   imports: [
     CommonModule,
     RouterLink,
@@ -27,7 +27,8 @@ import { ConfirmDialogComponent } from '../shared/components/confirm-dialog/conf
     MatProgressSpinnerModule,
     MatIconModule,
     MatTooltipModule,
-    MatDialogModule 
+    MatDialogModule,
+    MatTabsModule 
   ],
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.css']
