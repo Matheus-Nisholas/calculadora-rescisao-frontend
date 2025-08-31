@@ -1,18 +1,16 @@
-/* Importa o tema base do Angular Material */
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
-/* Define as variáveis de cor para o novo design */
 :root {
   --primary-color: #4A90E2;      /* Azul principal */
+  --accent-color: #D0021B;       /* Rosa/vermelho para botões de destaque */
   --background-color: #EEF5FC;  /* Fundo azul muito claro */
-  --card-background-color: rgba(255, 255, 255, 0.6); /* Branco semi-transparente para o efeito de vidro */
-  --text-color: #2D3748;         /* Cor de texto escura */
-  --text-color-light: #718096;    /* Cor de texto clara */
-  --border-color: rgba(255, 255, 255, 0.8);
+  --card-background-color: #FFFFFF; /* Fundo branco sólido para os cards */
+  --text-color: #2D3748;
+  --text-color-light: #718096;
+  --border-color: #E2E8F0;
   --shadow-color: rgba(74, 144, 226, 0.1);
-
-  /* Sobrescreve as cores do Angular Material */
   --mat-primary-main-color: var(--primary-color);
+  --mat-accent-main-color: var(--accent-color);
 }
 
 html, body { 
