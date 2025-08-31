@@ -11,4 +11,6 @@ import { RouterOutlet } from '@angular/router';
 export class App {
   // O título não é mais usado no template, mas pode ser mantido.
   protected readonly title = signal('calculadora-rescisao-frontend');
+
+  
 }
