@@ -8,11 +8,16 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CalculadoraService } from '../calculadora/calculadora.service';
 import { Page, HistoricoItem } from './history.model';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip'; // Para a dica no botão de excluir
+import { MatTooltipModule } from '@angular/material/tooltip';
+
+// ALTERADO: Adicionamos MatDialogModule
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-history',
   standalone: true,
+  // ALTERADO: Adicionamos MatDialogModule ao array de imports
   imports: [
     CommonModule,
     RouterLink,
@@ -21,14 +26,14 @@ import { MatTooltipModule } from '@angular/material/tooltip'; // Para a dica no 
     MatButtonModule,
     MatProgressSpinnerModule,
     MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDialogModule 
   ],
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.css']
 })
 export class HistoryComponent implements OnInit, AfterViewInit {
   
-  // ALTERADO: Adicionadas as colunas 'nomeEmpregado' e 'acoes'
   displayedColumns: string[] = ['criadoEm', 'nomeEmpregado', 'tipoRescisao', 'totalLiquido', 'acoes'];
   dataSource = new MatTableDataSource<HistoricoItem>();
   pageData: Page<HistoricoItem> | null = null;
@@ -38,7 +43,8 @@ export class HistoryComponent implements OnInit, AfterViewInit {
 
   constructor(
     private calculadoraService: CalculadoraService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -74,24 +80,28 @@ export class HistoryComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/app/historico', id]);
   }
 
-  /**
-   * NOVO: Método para excluir um item do histórico.
-   * @param id O ID do cálculo a ser excluído.
-   * @param event O evento de clique, para impedir a navegação.
-   */
   excluir(id: number, event: MouseEvent): void {
-    event.stopPropagation(); // Impede que o clique na linha navegue para os detalhes
+    event.stopPropagation();
 
-    // Futuramente, podemos adicionar um modal de confirmação aqui ("Tem certeza?")
-    this.calculadoraService.excluirCalculo(id).subscribe({
-      next: () => {
-        console.log(`Cálculo ${id} excluído com sucesso.`);
-        // Recarrega a página atual do histórico para refletir a exclusão
-        this.loadHistoryPage(this.pageData?.number || 0);
-      },
-      error: (err) => {
-        console.error(`Erro ao excluir cálculo ${id}`, err);
-        // Informar o usuário sobre o erro
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '350px',
+      data: { 
+        title: 'Confirmar Exclusão', 
+        message: 'Você tem certeza que deseja excluir este cálculo do histórico?' 
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.calculadoraService.excluirCalculo(id).subscribe({
+          next: () => {
+            console.log(`Cálculo ${id} excluído com sucesso.`);
+            this.loadHistoryPage(this.pageData?.number || 0);
+          },
+          error: (err) => {
+            console.error(`Erro ao excluir cálculo ${id}`, err);
+          }
+        });
       }
     });
   }

@@ -1,5 +1,7 @@
-.calculadora-page-container {
+/* Layout principal da página em formato de grid */
+.calculadora-layout {
   display: grid;
+  /* Por padrão, temos 2 colunas de tamanho igual */
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
   align-items: flex-start;
@@ -8,7 +10,7 @@
 .calculadora-form {
   display: flex;
   flex-direction: column;
-  gap: 8px; /* Espaçamento entre os campos */
+  gap: 8px;
 }
 
 .checkbox-aviso {
@@ -78,9 +80,13 @@
   margin-top: 1rem;
 }
 
-/* Responsividade para telas menores */
+/*
+ * Media Query para Responsividade.
+ * Esta regra só é aplicada em telas com largura máxima de 992px.
+*/
 @media (max-width: 992px) {
-  .calculadora-page-container {
+  .calculadora-layout {
+    /* Altera o layout para apenas 1 coluna, empilhando os cards */
     grid-template-columns: 1fr;
   }
 }
