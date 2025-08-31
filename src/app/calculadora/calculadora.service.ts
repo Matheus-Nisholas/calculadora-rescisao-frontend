@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CalculadoraService {
 
-  private apiUrl = 'http://localhost:8080/api/v1/rescisoes';
+  private apiUrl = `${environment.apiUrl}/api/v1/rescisoes`;
 
   constructor(private http: HttpClient) { }
 
@@ -24,9 +25,15 @@ export class CalculadoraService {
     });
   }
 
+  /**
+   * NOVO: Adicione este método.
+   * Ele busca um cálculo específico do histórico pelo seu ID.
+   * @param id O ID do cálculo a ser buscado.
+   */
   public getHistoricoPorId(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`).pipe(
       map(calculo => {
+        // Lógica para parsear o JSON de componentes, se necessário
         if (calculo && typeof calculo.componentesJson === 'string') {
           try {
             calculo.componentes = JSON.parse(calculo.componentesJson);
@@ -34,8 +41,6 @@ export class CalculadoraService {
             console.error('Falha ao parsear o JSON de componentes:', e);
             calculo.componentes = [];
           }
-        } else {
-          calculo.componentes = [];
         }
         return calculo;
       })
