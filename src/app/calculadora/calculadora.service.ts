@@ -3,10 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environment';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class CalculadoraService {
+  today: Date = new Date();
 
   private apiUrl = `${environment.apiUrl}/api/v1/rescisoes`;
 
