@@ -1,19 +1,19 @@
-/* Sobrescreve o tema padrão do Angular Material com nossas cores customizadas */
-:root {
-  --primary-color: #4a90e2; /* Azul principal do design */
-  --background-color: #eef5fc; /* Fundo azul bem claro */
-  --card-background-color: rgba(255, 255, 255, 0.7);
-  --text-color: #333;
-  --text-color-light: #555;
-  --border-color: #dfe9f5;
-  --shadow-color: rgba(0, 0, 0, 0.05);
-
-  /* Cores do Angular Material */
-  --mat-primary-main-color: var(--primary-color);
-  --mat-primary-contrast-color: white;
-}
-
+/* Importa o tema base do Angular Material */
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+/* Define as variáveis de cor para o novo design */
+:root {
+  --primary-color: #4A90E2;      /* Azul principal */
+  --background-color: #EEF5FC;  /* Fundo azul muito claro */
+  --card-background-color: rgba(255, 255, 255, 0.6); /* Branco semi-transparente para o efeito de vidro */
+  --text-color: #2D3748;         /* Cor de texto escura */
+  --text-color-light: #718096;    /* Cor de texto clara */
+  --border-color: rgba(255, 255, 255, 0.8);
+  --shadow-color: rgba(74, 144, 226, 0.1);
+
+  /* Sobrescreve as cores do Angular Material */
+  --mat-primary-main-color: var(--primary-color);
+}
 
 html, body { 
   height: 100%; 
@@ -21,14 +21,4 @@ html, body {
   background-color: var(--background-color);
   font-family: 'Poppins', sans-serif;
   color: var(--text-color);
-}
-
-/* Remove as setas de incremento/decremento dos inputs numéricos */
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
-}
-input[type=number] {
-  -moz-appearance: textfield;
 }
