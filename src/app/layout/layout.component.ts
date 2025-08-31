@@ -4,7 +4,11 @@ import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { AuthService, UserProfile } from '../auth/auth.service';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon'; // Import para o avatar
+
+// NOVO: Importação do módulo de ícones
+import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
+
 
 @Component({
   selector: 'app-layout',
@@ -15,7 +19,8 @@ import { MatIconModule } from '@angular/material/icon'; // Import para o avatar
     RouterLink,
     RouterLinkActive,
     MatButtonModule,
-    MatIconModule // Adicionado aqui
+    MatTabsModule,
+    MatIconModule // <-- Adicionado aqui
   ],
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css']
