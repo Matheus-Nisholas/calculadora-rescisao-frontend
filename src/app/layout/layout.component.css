@@ -1,33 +1,49 @@
-.main-toolbar {
-  display: flex;
-  justify-content: space-between;
-}
-
-.main-nav {
-  margin: 0 24px;
-}
-
-.main-nav a {
-  text-decoration: none;
-}
-
-/* O Angular Material usa uma classe diferente para links ativos */
-.main-nav a.active-link {
-  background-color: rgba(255,255,255,0.1);
-}
-
-.toolbar-spacer {
-  flex: 1 1 auto; /* Este elemento flexível empurra o user-info para a direita */
-}
-
-.user-info {
+.app-header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0 2rem;
+  height: 70px;
   display: flex;
   align-items: center;
-  gap: 1rem;
+}
+
+.header-content {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left, .header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.app-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.user-name {
+  font-weight: 500;
+}
+
+.user-avatar {
+  height: 40px;
+  width: 40px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .main-content {
   padding: 2rem;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
 }
