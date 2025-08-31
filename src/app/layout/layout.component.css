@@ -42,6 +42,11 @@
   cursor: pointer;
 }
 
+.main-nav-tabs {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
 .main-content {
   padding: 2rem;
   max-width: 1400px;
