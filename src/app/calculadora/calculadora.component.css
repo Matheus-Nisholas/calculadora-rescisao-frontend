@@ -1,0 +1,118 @@
+.calculadora-container {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr; /* Coluna do formulário maior que a de resultados */
+  gap: 2rem;
+  align-items: flex-start;
+  padding: 2rem; /* Adiciona um padding geral para a área de conteúdo */
+  background-color: #f5f5f5; /* Cor de fundo levemente diferente para contraste */
+}
+
+mat-card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para todos os cards */
+  border-radius: 8px; /* Borda arredondada */
+}
+
+mat-card-title {
+  font-weight: 600;
+  color: var(--mat-grey-800, #424242);
+}
+
+mat-card-subtitle {
+  color: var(--mat-grey-600, #757575);
+}
+
+.calculator-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.checkbox-aviso {
+  margin: 0.5rem 0;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.results-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.breakdown-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.breakdown-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8rem 0;
+  color: #555;
+}
+
+.breakdown-list li .value {
+  font-weight: 500;
+  color: #333;
+}
+
+mat-divider {
+  margin: 0.5rem 0;
+}
+
+.total-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding-top: 1rem;
+}
+
+.total-line .total-value {
+  color: var(--mat-primary-main-color, #3f51b5); /* Usa a cor primária do tema */
+}
+
+/* NOVO: Estilos para o histórico resumido */
+.history-card mat-list-item {
+  cursor: pointer;
+  border-bottom: 1px solid #eee; /* Linha divisória para itens da lista */
+}
+
+.history-card mat-list-item:last-child {
+  border-bottom: none;
+}
+
+.history-card mat-list-item:hover {
+  background-color: #f0f0f0;
+}
+
+.history-placeholder {
+  color: #777;
+  text-align: center;
+  padding: 1rem;
+}
+
+.full-history-button {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+  .calculadora-container {
+    grid-template-columns: 1fr;
+  }
+}
