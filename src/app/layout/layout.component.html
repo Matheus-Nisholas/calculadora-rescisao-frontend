@@ -1,24 +1,32 @@
 <header class="app-header">
   <div class="header-content">
-    
     <div class="header-left">
       <span class="app-title">Calculadora de Rescisão</span>
-      <nav class="main-nav">
-        <a routerLink="/app/calculadora" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">Calculadora</a>
-        <a routerLink="/app/historico" routerLinkActive="active-link">Histórico</a>
-      </nav>
     </div>
-
     <div class="header-right" *ngIf="currentUser$ | async as user">
       <span class="user-name">Olá, {{ user.nome }}</span>
       <div class="user-avatar">
         <mat-icon>person</mat-icon>
       </div>
-      <button mat-stroked-button (click)="logout()">Sair</button>
     </div>
-
   </div>
 </header>
+
+<nav mat-tab-nav-bar class="main-nav-tabs">
+  <a mat-tab-link
+     routerLink="/app/calculadora"
+     routerLinkActive #rla1="routerLinkActive"
+     [active]="rla1.isActive"
+     [routerLinkActiveOptions]="{exact: true}">
+    Calculadora
+  </a>
+  <a mat-tab-link
+     routerLink="/app/historico"
+     routerLinkActive #rla2="routerLinkActive"
+     [active]="rla2.isActive">
+    Histórico
+  </a>
+</nav>
 
 <main class="main-content">
   <router-outlet></router-outlet>
