@@ -3,13 +3,13 @@
   <div class="detail-header">
     <h2>Detalhes do Cálculo</h2>
     
-    <div>
+    <div class="header-actions">
       <button mat-flat-button color="primary" (click)="baixarPdf(calculo.id)">
         <mat-icon>download</mat-icon>
         Baixar PDF
       </button>
 
-      <a mat-stroked-button routerLink="/app/historico" class="back-link">
+      <a mat-stroked-button routerLink="/app/historico">
         <mat-icon>arrow_back</mat-icon>
         Voltar
       </a>
@@ -22,9 +22,7 @@
     </mat-card-header>
     <mat-card-content class="summary-grid">
       <div><strong>Tipo:</strong> {{ calculo.tipoRescisao | titlecase }}</div>
-      
       <div><strong>Admissão:</strong> {{ calculo['dataAdmissão'] | date:'dd/MM/yyyy' }}</div>
-      
       <div><strong>Salário:</strong> {{ calculo.salarioMensal | currency:'BRL' }}</div>
       <div><strong>Desligamento:</strong> {{ calculo.dataDesligamento | date:'dd/MM/yyyy' }}</div>
     </mat-card-content>
@@ -35,10 +33,10 @@
       <mat-card-title>Proventos (Verbas Brutas)</mat-card-title>
       <mat-card-content>
         <mat-list>
-          <mat-list-item *ngFor="let comp of calculo.componentes">
+          <li *ngFor="let comp of calculo.componentes">
             <span matListItemTitle>{{ comp.nome }}</span>
             <span matListItemLine class="item-value">{{ comp.valor | currency:'BRL' }}</span>
-          </mat-list-item>
+          </li>
         </mat-list>
         <mat-divider></mat-divider>
         <div class="total-line">
