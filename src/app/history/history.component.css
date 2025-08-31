@@ -1,49 +1,71 @@
-.history-container {
-  max-width: 100%;
+:host {
+  display: block;
 }
 
-h2 {
+.main-tabs {
+  margin-bottom: 2rem;
+}
+
+.calculadora-container {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+mat-card {
+  /* Efeito de Vidro Fosco (Glassmorphism) */
+  background: var(--card-background-color);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 32px 0 var(--shadow-color);
+  padding: 1.5rem;
+}
+
+mat-card-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+mat-card-subtitle {
   margin-bottom: 1.5rem;
 }
 
-.table-container {
-  overflow: auto; /* Garante que a tabela seja rolável em telas pequenas */
-}
-
-table {
-  width: 100%;
-}
-
-.mat-mdc-row:hover {
-  background-color: #f5f5f5;
-  cursor: pointer;
-}
-
-.valor-liquido {
-  font-weight: bold;
-}
-
-.pagination-controls {
+.calculator-form {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  flex-direction: column;
   gap: 1rem;
-  margin-top: 1.5rem;
-  padding: 1rem;
 }
 
-.loading-spinner {
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-actions {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 4rem;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
 }
 
-.empty-message {
-  text-align: center;
-  padding: 2rem;
-  color: #666;
-  background-color: #f9f9f9;
-  border-radius: 4px;
-  margin-top: 1rem;
+.form-actions button {
+  border-radius: 20px;
+  padding: 0 24px;
+  height: 40px;
+}
+
+.results-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+  .calculadora-container {
+    grid-template-columns: 1fr;
+  }
 }
