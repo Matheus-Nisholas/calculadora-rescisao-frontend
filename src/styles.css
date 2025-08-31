@@ -1,4 +1,34 @@
-/* You can add global styles to this file, and also import other style files */
+/* Sobrescreve o tema padrão do Angular Material com nossas cores customizadas */
+:root {
+  --primary-color: #4a90e2; /* Azul principal do design */
+  --background-color: #eef5fc; /* Fundo azul bem claro */
+  --card-background-color: rgba(255, 255, 255, 0.7);
+  --text-color: #333;
+  --text-color-light: #555;
+  --border-color: #dfe9f5;
+  --shadow-color: rgba(0, 0, 0, 0.05);
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+  /* Cores do Angular Material */
+  --mat-primary-main-color: var(--primary-color);
+  --mat-primary-contrast-color: white;
+}
+
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+html, body { 
+  height: 100%; 
+  margin: 0;
+  background-color: var(--background-color);
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-color);
+}
+
+/* Remove as setas de incremento/decremento dos inputs numéricos */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
