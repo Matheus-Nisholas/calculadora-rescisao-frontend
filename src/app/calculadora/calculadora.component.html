@@ -1,67 +1,106 @@
 <div class="calculadora-container">
-
-  <mat-card class="calculator-form-card">
+  <mat-card class="calculator-card">
     <mat-card-title>Calcular Rescisão</mat-card-title>
     <mat-card-subtitle>Preencha os dados para simular o cálculo</mat-card-subtitle>
+
     <mat-card-content>
-      <form (ngSubmit)="calcular()" class="calculator-form">
-        
+      <form (ngSubmit)="calcular()" class="calculator-form" #form="ngForm">
+
         <mat-form-field appearance="outline">
-            <mat-label>Nome do Empregado (Opcional)</mat-label>
-            <input matInput type="text" [(ngModel)]="calculoRequest.nomeEmpregado" name="nomeEmpregado">
+          <mat-label>Nome do Empregado</mat-label>
+          <input matInput [(ngModel)]="calculoRequest.nomeEmpregado" name="nomeEmpregado">
         </mat-form-field>
-        
-        <mat-form-field appearance="outline">
-          <mat-label>Tipo de Rescisão</mat-label>
-          <mat-select [(ngModel)]="calculoRequest.tipoRescisao" name="tipoRescisao">
-            <mat-option value="SEM_JUSTA_CAUSA">Sem Justa Causa</mat-option>
-            <mat-option value="JUSTA_CAUSA">Justa Causa</mat-option>
-            <mat-option value="PEDIDO_DEMISSAO">Pedido de Demissão</mat-option>
-            <mat-option value="ACORDO_484A">Acordo Art. 484-A</mat-option>
-            <mat-option value="TERMO_CONTRATO">Término de Contrato</mat-option>
-          </mat-select>
-        </mat-form-field>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Tipo de Rescisão</mat-label>
+            <mat-select [(ngModel)]="calculoRequest.tipoRescisao" name="tipoRescisao" required>
+              <mat-option value="SEM_JUSTA_CAUSA">Sem Justa Causa</mat-option>
+              <mat-option value="JUSTA_CAUSA">Justa Causa</mat-option>
+              <mat-option value="PEDIDO_DEMISSAO">Pedido de Demissão</mat-option>
+              <mat-option value="ACORDO_484A">Acordo Art. 484-A</mat-option>
+              <mat-option value="TERMO_CONTRATO">Término de Contrato</mat-option>
+            </mat-select>
+            <mat-error>Selecione o tipo de rescisão</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Data de Admissão</mat-label>
+            <input
+              matInput
+              [matDatepicker]="pickerAdmissao"
+              placeholder="dd/mm/aaaa"
+              autocomplete="off"
+              [max]="today"
+              [(ngModel)]="calculoRequest.dataAdmissao"
+              name="dataAdmissao"
+              required
+              #admissao="ngModel">
+            <mat-datepicker-toggle matSuffix [for]="pickerAdmissao"></mat-datepicker-toggle>
+            <mat-datepicker #pickerAdmissao startView="multi-year"></mat-datepicker>
+            <mat-hint align="start">Formato dd/mm/aaaa</mat-hint>
+            <mat-error *ngIf="admissao.errors?.['required']">Obrigatório</mat-error>
+            <mat-error *ngIf="admissao.errors?.['matDatepickerParse']">Data inválida</mat-error>
+            <mat-error *ngIf="admissao.errors?.['matDatepickerMax']">Não pode ser no futuro</mat-error>
+          </mat-form-field>
+        </div>
 
         <div class="form-row">
           <mat-form-field appearance="outline">
             <mat-label>Salário Mensal</mat-label>
             <span matPrefix>R$&nbsp;</span>
-            <input matInput type="number" placeholder="5.000,00" [(ngModel)]="calculoRequest.salarioMensal" name="salarioMensal" required>
+            <input
+              matInput
+              type="number"
+              inputmode="decimal"
+              step="0.01"
+              [(ngModel)]="calculoRequest.salarioMensal"
+              name="salarioMensal"
+              required>
+            <mat-error>Informe o salário</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
-            <mat-label>Data de Admissão</mat-label>
-            <input matInput [matDatepicker]="pickerAdmissao" [(ngModel)]="calculoRequest.dataAdmissao" name="dataAdmissao" required>
-            <mat-datepicker-toggle matSuffix [for]="pickerAdmissao"></mat-datepicker-toggle>
-            <mat-datepicker #pickerAdmissao></mat-datepicker>
+            <mat-label>Data de Desligamento</mat-label>
+            <input
+              matInput
+              [matDatepicker]="pickerDesligamento"
+              placeholder="dd/mm/aaaa"
+              autocomplete="off"
+              [min]="calculoRequest.dataAdmissao || null"
+              [max]="today"
+              [(ngModel)]="calculoRequest.dataDesligamento"
+              name="dataDesligamento"
+              required
+              #deslig="ngModel">
+            <mat-datepicker-toggle matSuffix [for]="pickerDesligamento"></mat-datepicker-toggle>
+            <mat-datepicker #pickerDesligamento startView="multi-year"></mat-datepicker>
+            <mat-hint align="start">Formato dd/mm/aaaa</mat-hint>
+            <mat-error *ngIf="deslig.errors?.['required']">Obrigatório</mat-error>
+            <mat-error *ngIf="deslig.errors?.['matDatepickerParse']">Data inválida</mat-error>
+            <mat-error *ngIf="deslig.errors?.['matDatepickerMin']">Não pode ser antes da admissão</mat-error>
+            <mat-error *ngIf="deslig.errors?.['matDatepickerMax']">Não pode ser no futuro</mat-error>
           </mat-form-field>
         </div>
 
         <div class="form-row">
           <mat-form-field appearance="outline">
-            <mat-label>Data de Desligamento</mat-label>
-            <input matInput [matDatepicker]="pickerDesligamento" [(ngModel)]="calculoRequest.dataDesligamento" name="dataDesligamento" required>
-            <mat-datepicker-toggle matSuffix [for]="pickerDesligamento"></mat-datepicker-toggle>
-            <mat-datepicker #pickerDesligamento></mat-datepicker>
+            <mat-label>Dias de Férias Vencidas</mat-label>
+            <input matInput type="number" min="0" step="1" [(ngModel)]="calculoRequest.feriasVencidasDias" name="feriasVencidasDias">
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Saldo FGTS</mat-label>
             <span matPrefix>R$&nbsp;</span>
-            <input matInput type="number" placeholder="12.000,00" [(ngModel)]="calculoRequest.saldoFgtsDepositado" name="saldoFgtsDepositado">
+            <input matInput type="number" inputmode="decimal" step="0.01" [(ngModel)]="calculoRequest.saldoFgtsDepositado" name="saldoFgtsDepositado">
           </mat-form-field>
         </div>
 
         <div class="form-row">
-          <mat-form-field appearance="outline">
-            <mat-label>Dias de Férias Venc.</mat-label>
-            <input matInput type="number" placeholder="0" [(ngModel)]="calculoRequest.feriasVencidasDias" name="feriasVencidasDias">
-          </mat-form-field>
-          
-          <mat-form-field appearance="outline">
-            <mat-label>Nº de Dependentes (IRRF)</mat-label>
-            <input matInput type="number" placeholder="0" [(ngModel)]="calculoRequest.numeroDependentes" name="numeroDependentes">
-          </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Nº de Dependentes (IRRF)</mat-label>
+                <input matInput type="number" min="0" step="1" [(ngModel)]="calculoRequest.numeroDependentes" name="numeroDependentes">
+            </mat-form-field>
         </div>
         
         <mat-checkbox [(ngModel)]="calculoRequest.avisoIndenizado" name="avisoIndenizado" class="checkbox-aviso">
@@ -69,59 +108,13 @@
         </mat-checkbox>
 
         <div class="form-actions">
-          <button mat-stroked-button type="button" (click)="limpar()">Limpar</button>
-          <button mat-flat-button color="primary" type="submit">Calcular</button>
+          <button mat-stroked-button type="button" (click)="limpar()" class="btn-clear">Limpar</button>
+          <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">Calcular</button>
         </div>
-
       </form>
     </mat-card-content>
   </mat-card>
 
   <div class="results-column">
-    <mat-card class="results-card" *ngIf="resultado">
-      <mat-card-title>Resultado</mat-card-title>
-      <mat-card-content>
-        <ul class="breakdown-list">
-          <li *ngFor="let comp of resultado.componentes">
-            <span>{{ comp.nome }}</span>
-            <span class="value">{{ comp.valor | currency:'BRL' }}</span>
-          </li>
-        </ul>
-        <mat-divider></mat-divider>
-        <div class="total-line">
-          <span>Total Líquido</span>
-          <span class="total-value">{{ resultado.totalLiquido | currency:'BRL' }}</span>
-        </div>
-      </mat-card-content>
-    </mat-card>
-
-    <mat-card class="history-card">
-      <mat-card-title>Últimos Cálculos</mat-card-title>
-      <mat-card-content>
-        <div *ngIf="ultimosCalculos.length > 0; else noHistory">
-          <mat-list>
-            <mat-list-item *ngFor="let calc of ultimosCalculos" (click)="navegarParaDetalhes(calc.id)">
-              <div matListItemTitle>
-                {{ calc.nomeEmpregado || 'N/A' }} ({{ calc.tipoRescisao | titlecase }})
-              </div>
-              <div matListItemLine>
-                {{ calc.totalLiquido | currency:'BRL' }} - {{ calc.criadoEm | date:'short' }}
-              </div>
-              <mat-divider [inset]="true"></mat-divider>
-            </mat-list-item>
-          </mat-list>
-          <button mat-flat-button color="accent" class="full-history-button" (click)="navegarParaHistoricoCompleto()">
-            Ver Histórico Completo
-          </button>
-        </div>
-        <ng-template #noHistory>
-          <p class="history-placeholder">Nenhum cálculo recente encontrado.</p>
-          <button mat-flat-button color="accent" class="full-history-button" (click)="navegarParaHistoricoCompleto()">
-            Ver Histórico Completo
-          </button>
-        </ng-template>
-      </mat-card-content>
-    </mat-card>
-  </div>
-
+      </div>
 </div>
