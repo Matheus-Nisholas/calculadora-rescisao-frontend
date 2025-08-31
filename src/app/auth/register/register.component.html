@@ -5,7 +5,7 @@
       <mat-card-subtitle>Preencha os dados para se registrar</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <form (ngSubmit)="register()">
+      <form (ngSubmit)="register()" #form="ngForm">
         <mat-form-field appearance="outline">
           <mat-label>Nome Completo</mat-label>
           <input matInput type="text" name="nome" [(ngModel)]="userData.nome" required>
@@ -13,12 +13,23 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
-          <input matInput type="email" name="email" [(ngModel)]="userData.email" required>
+          <input matInput type="email" name="email" [(ngModel)]="userData.email" required email #email="ngModel">
+          <mat-error *ngIf="email.errors?.['email']">Por favor, insira um email válido.</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Senha</mat-label>
-          <input matInput type="password" name="senha" [(ngModel)]="userData.senha" required>
+          <input 
+            matInput 
+            type="password" 
+            name="senha" 
+            [(ngModel)]="userData.senha" 
+            required 
+            minlength="8" 
+            #senha="ngModel">
+          <mat-hint align="end">{{ senha.value?.length || 0 }} / 8</mat-hint>
+          <mat-error *ngIf="senha.errors?.['required']">A senha é obrigatória.</mat-error>
+          <mat-error *ngIf="senha.errors?.['minlength']">A senha deve ter no mínimo 8 caracteres.</mat-error>
         </mat-form-field>
 
         <div *ngIf="errorMessage" class="error-message">
@@ -28,12 +39,12 @@
           {{ successMessage }}
         </div>
 
-        <button mat-raised-button color="primary" type="submit" [disabled]="isLoading" class="btn-login">
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isLoading" class="btn-login">
           <span *ngIf="!isLoading">Registrar</span>
           <mat-spinner *ngIf="isLoading" diameter="24"></mat-spinner>
         </button>
 
-        <div class="register-link">
+        <div class="sub-link">
           <p>Já tem uma conta? <a routerLink="/login">Faça o login</a></p>
         </div>
       </form>
