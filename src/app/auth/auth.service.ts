@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, tap, BehaviorSubject, switchMap, of } from 'rxjs';
 
+// NOVO: Adicionamos o campo 'username' à interface do perfil do usuário
 export interface UserProfile {
   id: number;
   email: string;
   nome: string;
   roles: string[];
+  username: string; 
 }
 
 @Injectable({
@@ -25,7 +27,10 @@ export class AuthService {
     private router: Router
   ) { }
 
-  login(credentials: any): Observable<UserProfile> {
+  /**
+   * ALTERADO: O método agora envia um objeto com a propriedade 'login'
+   */
+  login(credentials: { login: string, senha: string }): Observable<UserProfile> {
     return this.http.post<any>(`${this.apiUrl}/auth/login`, credentials).pipe(
       tap(response => {
         if (response && response.accessToken) {
@@ -37,9 +42,7 @@ export class AuthService {
   }
   
   /**
-   * Envia os dados de um novo usuário para a API de registro.
-   * @param userInfo Objeto com nome, email e senha.
-   * @returns Observable da resposta da API.
+   * ALTERADO: O método agora envia o objeto completo, incluindo 'username'.
    */
   register(userInfo: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/auth/register`, userInfo);
@@ -52,7 +55,6 @@ export class AuthService {
         return of(null as any);
     }
     
-    // O HttpInterceptor adiciona o cabeçalho de autorização automaticamente.
     return this.http.get<UserProfile>(`${this.apiUrl}/auth/me`).pipe(
       tap(user => {
         this.currentUserSubject.next(user);
