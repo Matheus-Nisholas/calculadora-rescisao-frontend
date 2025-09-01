@@ -3,11 +3,13 @@
     <div class="header-left">
       <span class="app-title">Calculadora de Rescisão</span>
     </div>
+
     <div class="header-right" *ngIf="currentUser$ | async as user">
       <span class="user-name">Olá, {{ user.nome }}</span>
       <div class="user-avatar">
         <mat-icon>person</mat-icon>
       </div>
+      <button mat-stroked-button (click)="logout()">Sair</button>
     </div>
   </div>
 </header>
