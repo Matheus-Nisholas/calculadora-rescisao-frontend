@@ -52,3 +52,26 @@
   max-width: 1400px;
   margin: 0 auto;
 }
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Reduzimos um pouco o gap aqui para o botão ficar mais próximo */
+}
+
+.header-right button {
+  background-color: transparent; /* Fundo transparente */
+  color: white; /* Texto branco */
+  border-color: rgba(255, 255, 255, 0.4); /* Borda branca semi-transparente */
+  height: 36px; /* Ajusta um pouco a altura */
+  padding: 0 1rem; /* Preenchimento interno */
+  font-size: 0.9rem; /* Tamanho da fonte */
+  font-weight: 500;
+  transition: all 0.2s ease-in-out; /* Transição suave para o hover */
+}
+
+.header-right button:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Fundo sutil no hover */
+  border-color: rgba(255, 255, 255, 0.7); /* Borda mais visível no hover */
+  transform: translateY(-1px); /* Pequeno efeito de elevação */
+}
