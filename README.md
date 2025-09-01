@@ -54,3 +54,8 @@
     O comando irá compilar o projeto e abri-lo automaticamente no seu navegador no endereço [http://localhost:4200/](http://localhost:4200/).
 
 ---
+
+## Licença
+Este projeto é autoral © 2025 Matheus Nisholas Rocha da Silva.  
+O código pode ser utilizado apenas para **fins de estudo e aprendizado**, sendo **vedado o uso comercial** sem autorização do autor.  
+Veja o arquivo [LICENSE](./LICENSE) para mais detalhes.
