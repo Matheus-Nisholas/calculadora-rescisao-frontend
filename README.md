@@ -1,6 +1,6 @@
 # Calculadora de Rescisão - Frontend
 
-(https://imgur.com/gallery/site-de-calcular-rescis-o-trabalhista-sai-justo-GdIh6va) Interface web moderna e responsiva para a Calculadora de Rescisão, construída com a versão mais recente do Angular e utilizando componentes standalone. A aplicação consome a API do backend para fornecer uma experiência de usuário completa, desde o registro até a visualização detalhada dos cálculos.
+[Interface da Aplicação](https://imgur.com/gallery/site-de-calcular-rescis-o-trabalhista-sai-justo-GdIh6va) Interface web moderna e responsiva para a Calculadora de Rescisão, construída com a versão mais recente do Angular e utilizando componentes standalone. A aplicação consome a API do backend para fornecer uma experiência de usuário completa, desde o registro até a visualização detalhada dos cálculos.
 
 ---
 
