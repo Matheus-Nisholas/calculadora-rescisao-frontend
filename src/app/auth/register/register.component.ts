@@ -34,7 +34,8 @@ export class RegisterComponent {
   userData = {
     nome: '',
     email: '',
-    senha: ''
+    senha: '',
+    login: ''
   };
 
   errorMessage: string | null = null;
@@ -63,7 +64,7 @@ export class RegisterComponent {
         this.isLoading = false;
         console.error('Erro no registro:', err);
         if (err.status === 400) {
-          this.errorMessage = 'Este email já está em uso. Por favor, tente outro.';
+          this.errorMessage = 'Este nome de usuario já está em uso. Por favor, tente outro.';
         } else {
           this.errorMessage = 'Ocorreu um erro inesperado. Tente novamente mais tarde.';
         }
