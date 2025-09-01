@@ -1,59 +1,56 @@
-# CalculadoraRescisaoFrontend
+# Calculadora de Rescisão - Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.1.
+![Interface da Aplicação](https://i.imgur.com/c986bc.png) Interface web moderna e responsiva para a Calculadora de Rescisão, construída com a versão mais recente do Angular e utilizando componentes standalone. A aplicação consome a API do backend para fornecer uma experiência de usuário completa, desde o registro até a visualização detalhada dos cálculos.
 
-## Development server
+---
 
-To start a local development server, run:
+## ✨ Funcionalidades Principais
 
-```bash
-ng serve
-```
+* **Arquitetura Standalone:** Projeto construído com a arquitetura de componentes standalone do Angular, sem a necessidade de `NgModules`.
+* **Interface Reativa:** Formulários e listas que reagem em tempo real às ações do usuário.
+* **Design Profissional:** Interface elegante e consistente, construída com a biblioteca de componentes **Angular Material**.
+* **Fluxo de Autenticação Completo:** Telas de login e registro com validação de dados e feedback para o usuário.
+* **Rotas Protegidas:** Apenas usuários autenticados podem acessar as áreas de cálculo e histórico.
+* **Histórico Paginado:** Tabela de histórico com paginação, ordenação de colunas e funcionalidade de exclusão com diálogo de confirmação.
+* **Download de PDF:** Integração com a API para permitir o download dos recibos de cálculo.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## 🚀 Tecnologias Utilizadas
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+* **Angular 18+** (ou a versão que você estiver usando)
+* **TypeScript**
+* **Angular Material:** Para componentes de UI.
+* **RxJS:** Para programação reativa e gerenciamento de dados assíncronos.
+* **HTML5 & CSS3:** Com foco em layouts responsivos (Grid/Flexbox).
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🏁 Como Executar (Ambiente de Desenvolvimento)
 
-```bash
-ng generate --help
-```
+### Pré-requisitos
 
-## Building
+* Node.js e npm instalados.
+* Angular CLI instalado globalmente (`npm install -g @angular/cli`).
+* O **servidor do backend** deve estar em execução.
 
-To build the project run:
+### Passos
 
-```bash
-ng build
-```
+1.  **Clone o repositório:**
+    ```bash
+    git clone [https://github.com/seu-usuario/calculadora-rescisao-frontend.git](https://github.com/seu-usuario/calculadora-rescisao-frontend.git)
+    cd calculadora-rescisao-frontend
+    ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+2.  **Instale as dependências:**
+    ```bash
+    npm install
+    ```
 
-## Running unit tests
+3.  **Execute a Aplicação:**
+    ```bash
+    ng serve -o
+    ```
+    O comando irá compilar o projeto e abri-lo automaticamente no seu navegador no endereço [http://localhost:4200/](http://localhost:4200/).
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
