@@ -31,7 +31,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 export class LoginComponent {
   
   credentials = {
-    email: '',
+    login: '',
     senha: ''
   };
 
@@ -54,7 +54,7 @@ export class LoginComponent {
       },
       error: (err) => {
         this.isLoading = false;
-        this.errorMessage = 'Email ou senha inválidos. Tente novamente.';
+        this.errorMessage = 'Login ou senha inválidos. Tente novamente.';
       }
     });
   }
